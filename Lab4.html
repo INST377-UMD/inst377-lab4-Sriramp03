@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>INST377 - Lab 4</title>
+  <style>
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: lightblue;
+      margin: 0;
+      padding: 0;
+    }
+
+    #page-heading {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .section {
+      border: 2px solid purple;   
+      background-color: #fff;       
+      width: 60%;
+      margin: 20px auto;         
+      padding: 20px;
+    }
+
+    .section button {
+      background-color: purple;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .section button:hover {
+      background-color: #5e0f5e;
+    }
+
+    label {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    input[type="text"] {
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1 id="page-heading">INST377 - Lab 4</h1>
+
+  <div class="section" id="alert-section">
+    <form id="alertForm">
+      <label for="nameInput">Name:</label>
+      <input type="text" id="nameInput" required />
+      <button type="button" id="alertBtn">Alert Me</button>
+    </form>
+  </div>
+
+  <div class="section" id="color-section">
+    <button id="colorBtn">Change Color</button>
+  </div>
+
+  <div class="section" id="text-tester-section">
+    <form id="textForm">
+      <label for="textInput">Text Tester:</label>
+      <input type="text" id="textInput" />
+      <button type="button" id="validateBtn">Validate Text</button>
+    </form>
+  </div>
+
+  <div class="section" id="add-text-section">
+    <button id="addTextBtn">Add Text</button>
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      const savedColor = localStorage.getItem('bgColor');
+      if (savedColor) {
+        document.body.style.backgroundColor = savedColor;
+      }
+
+      const alertBtn = document.getElementById('alertBtn');
+      alertBtn.addEventListener('click', function() {
+        const name = document.getElementById('nameInput').value;
+        if (name) {
+          alert(`Hi ${name}!`);
+        }
+      });
+
+      const colorBtn = document.getElementById('colorBtn');
+      colorBtn.addEventListener('click', function() {
+        let currentColor = document.body.style.backgroundColor;
+
+        if (!currentColor || currentColor === 'lightblue') {
+          document.body.style.backgroundColor = 'green';
+          localStorage.setItem('bgColor', 'green');
+        }
+        else if (currentColor === 'green') {
+          document.body.style.backgroundColor = 'blue';
+          localStorage.setItem('bgColor', 'blue');
+        }
+        else {
+          document.body.style.backgroundColor = 'green';
+          localStorage.setItem('bgColor', 'green');
+        }
+      });
+
+      const validateBtn = document.getElementById('validateBtn');
+      validateBtn.addEventListener('click', function() {
+        const textValue = document.getElementById('textInput').value;
+        var validation = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+
+        if (validation.test(textValue)) {
+          alert('Special character detected!');
+        } else {
+          alert('No special characters found.');
+        }
+      });
+
+      const addTextBtn = document.getElementById('addTextBtn');
+      addTextBtn.addEventListener('click', function() {
+        const heading = document.getElementById('page-heading');
+        heading.textContent += ' Add Text';
+      });
+    });
+  </script>
+</body>
+</html>
